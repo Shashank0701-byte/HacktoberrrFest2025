@@ -21,6 +21,7 @@ ToolBox is revolutionizing how developers create and share productivity tools. W
 ## ✨ Core Features
 
 ### 🎯 Current Features
+
 - **🔐 User Authentication** - Secure login with GitHub/Google OAuth (Coming Soon)
 - **💾 Personal Storage** - Auth-based data storage - your templates, snippets, and tools are private by default
 - **⚡ Lightning Fast** - Optimized performance with tools running directly in your browser
@@ -28,8 +29,10 @@ ToolBox is revolutionizing how developers create and share productivity tools. W
 - **🌙 Dark Mode** - Full dark mode support for comfortable extended use
 - **📦 MongoDB Integration** - Robust data storage with user isolation
 - **🛡️ Type Safe** - Built with TypeScript for reliability and superior developer experience
+- **🚨 Rate Limiting** - API protection with intelligent rate limiting and IP-based tracking
 
 ### 🚀 Roadmap (Community Contributions Welcome!)
+
 - **🔌 Plugin Marketplace** - Discover and install community-created tools
 - **👥 Real-time Collaboration** - Work together on templates and snippets
 - **🤖 AI-Powered Tools** - Intelligent code suggestions and automation
@@ -40,27 +43,33 @@ ToolBox is revolutionizing how developers create and share productivity tools. W
 ## 🛠️ Built-in Tools
 
 ### Template Manager
+
 Create, organize, and manage reusable code templates with variable support. Perfect for boilerplate code, configuration files, and documentation templates.
 
 ![Template Manager](https://github.com/user-attachments/assets/ec633bab-d9e5-453f-9740-5ca5f91578be)
 
 ### Markdown Editor
+
 Rich markdown editing experience with live preview, syntax highlighting, and export capabilities.
 
 ![Markdown Editor](https://github.com/user-attachments/assets/8d39f8f0-e0cb-4096-a9a9-d416838c12a9)
 
 ### Schema Generator
+
 Generate database schemas, TypeScript types, and validation schemas with AI assistance.
 
 ![Schema Generator](https://github.com/user-attachments/assets/51cb3b68-0f24-4206-a910-45f19f6a5a80)
 
 ### Snippet Library
+
 Save and organize code snippets with syntax highlighting for quick reference and reuse.
 
 ### Profile Tracker
+
 Track and manage your development profiles and configurations across different platforms and environments.
 
 ### GitHub Helper
+
 Streamline your GitHub workflow with helpful utilities for repositories, issues, and pull requests.
 
 ## 🚀 Quick Start
@@ -73,33 +82,91 @@ Streamline your GitHub workflow with helpful utilities for repositories, issues,
 
 ### Installation
 
-1. Clone the repository:
+1. **Clone the repository:**
+
 ```bash
 git clone https://github.com/rishabh3562/ToolBox.git
 cd ToolBox
 ```
 
-2. Install dependencies:
+2. **Install dependencies:**
+
 ```bash
 npm install
 ```
 
-3. Set up environment variables:
+3. **Set up environment variables:**
+
 ```bash
 # Copy the example environment file
 cp .env.example .env
-
-# Edit .env and add your actual values:
-# - MONGODB_URI: Your MongoDB connection string (optional)
-# - NEXT_PUBLIC_GEMINI_API_KEY: Your Gemini API key from https://makersuite.google.com/app/apikey (optional)
 ```
 
-4. Run the development server:
+4. **Configure required environment variables in `.env`:**
+
+⚠️ **CRITICAL:** The following environment variables are **REQUIRED** for the app to start:
+
+```bash
+# MongoDB connection (required)
+MONGODB_URI=mongodb://127.0.0.1:27017/toolbox
+
+# NextAuth configuration (required)
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=  # Generate with: openssl rand -base64 32
+
+# Admin credentials (required)
+ADMIN_EMAIL=your-email@example.com
+ADMIN_PASSWORD=  # Generate with: openssl rand -base64 24 (min 16 chars)
+```
+
+**Generate secure credentials:**
+
+```bash
+# Generate NextAuth secret (copy output to NEXTAUTH_SECRET)
+openssl rand -base64 32
+
+# Generate admin password (copy output to ADMIN_PASSWORD)
+openssl rand -base64 24
+```
+
+**Optional but recommended for production:**
+
+```bash
+# Upstash Redis (required for rate limiting in production)
+# Sign up at: https://upstash.com (free tier available)
+UPSTASH_REDIS_REST_URL=https://your-redis.upstash.io
+UPSTASH_REDIS_REST_TOKEN=your-token
+
+# Gemini AI (for AI-powered features)
+NEXT_PUBLIC_GEMINI_API_KEY=your-key  # Get from https://makersuite.google.com/app/apikey
+```
+
+5. **Verify your configuration:**
+
+The app will automatically validate your environment variables on startup. If anything is missing or misconfigured, you'll see helpful error messages.
+
+6. **Run the development server:**
+
 ```bash
 npm run dev
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
+7. **Open [http://localhost:3000](http://localhost:3000) in your browser**
+
+8. **Access admin dashboard at [http://localhost:3000/login](http://localhost:3000/login)**
+   - Use the `ADMIN_EMAIL` and `ADMIN_PASSWORD` you set in `.env`
+
+### 🔒 Security Checklist
+
+Before deploying to production, ensure:
+
+- [ ] `NEXTAUTH_SECRET` is at least 32 characters and randomly generated
+- [ ] `ADMIN_PASSWORD` is at least 16 characters and randomly generated
+- [ ] `.env` file is in `.gitignore` (it is by default)
+- [ ] No credentials are hardcoded in source code
+- [ ] Redis (Upstash) is configured for production deployments
+- [ ] `NEXTAUTH_URL` is set to your actual domain in production
+- [ ] MongoDB uses Atlas or managed instance (not localhost) in production
 
 ## 📦 Build & Deploy
 
@@ -179,31 +246,37 @@ We're participating in Hacktoberfest! Check out our [curated issues for contribu
 We especially need help with:
 
 #### 🔐 **Authentication & Privacy** (Critical)
+
 - Implementing NextAuth.js with GitHub/Google OAuth
 - Migrating to user-scoped database architecture
 - Building privacy controls and data isolation
 
 #### 🔌 **Plugin Architecture** (Game-Changer)
+
 - Designing plugin API and manifest format
 - Building plugin loader and sandbox environment
 - Creating plugin SDK and documentation
 
 #### 🛒 **Tool Marketplace** (Core Vision)
+
 - Building tool discovery and submission system
 - Implementing ratings, reviews, and categories
 - Creating tool analytics dashboard
 
 #### 👥 **Collaboration Features** (Exciting)
+
 - Real-time editing with WebSockets
 - Team workspaces and sharing
 - Live presence indicators
 
 #### 🤖 **AI Integration** (Innovative)
+
 - Expanding AI features beyond schema generation
 - Code suggestions and auto-completion
 - Intelligent search and recommendations
 
 #### 📱 **Mobile & Cross-Platform** (Expanding Reach)
+
 - React Native or Capacitor mobile apps
 - PWA implementation
 - Offline functionality
@@ -269,12 +342,14 @@ For commercial licensing inquiries, contact: @rishabh3562 on GitHub
 ## 🎯 Roadmap to Democratization
 
 ### Phase 1: Foundation (Q1 2025) 🏗️
+
 - [x] Core tool infrastructure
 - [ ] User Authentication (GitHub, Google OAuth)
 - [ ] User-scoped data storage with privacy controls
 - [ ] User profiles and preferences
 
 ### Phase 2: Community Platform (Q2 2025) 👥
+
 - [ ] Tool Marketplace for discovery
 - [ ] Plugin architecture for community tools
 - [ ] Tool submission and approval workflow
@@ -282,6 +357,7 @@ For commercial licensing inquiries, contact: @rishabh3562 on GitHub
 - [ ] Social features (follow, like, share)
 
 ### Phase 3: Collaboration & Scale (Q3 2025) 🚀
+
 - [ ] Real-time collaboration features
 - [ ] Team workspaces and organizations
 - [ ] Advanced search and discovery
@@ -289,6 +365,7 @@ For commercial licensing inquiries, contact: @rishabh3562 on GitHub
 - [ ] Mobile applications (iOS/Android)
 
 ### Phase 4: Intelligence & Expansion (Q4 2025) 🤖
+
 - [ ] AI-powered tool suggestions
 - [ ] Automated code generation
 - [ ] Advanced analytics and insights
@@ -298,6 +375,7 @@ For commercial licensing inquiries, contact: @rishabh3562 on GitHub
 ## ⭐ Show Your Support
 
 If ToolBox helps improve your workflow, please consider:
+
 - Giving it a star on GitHub
 - Sharing it with your network
 - Contributing new tools or features
@@ -307,4 +385,4 @@ If ToolBox helps improve your workflow, please consider:
 
 **Made with ❤️ for developers, by developers**
 
-*Building the ultimate toolkit for modern development workflows.*
+_Building the ultimate toolkit for modern development workflows._

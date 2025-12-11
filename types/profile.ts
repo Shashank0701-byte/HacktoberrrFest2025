@@ -1,7 +1,14 @@
-export type PlatformType = 'youtube' | 'linkedin' | 'instagram' | 'twitter' | 'github' | 'medium';
+export type PlatformType =
+  | "youtube"
+  | "linkedin"
+  | "instagram"
+  | "twitter"
+  | "github"
+  | "medium";
 
 export interface Profile {
   id: string;
+  userId?: string;
   name: string;
   handle: string;
   platform: PlatformType;
@@ -18,7 +25,7 @@ export interface FavoriteContent {
   id: string;
   title: string;
   url: string;
-  type: 'video' | 'post' | 'article' | 'tweet' | 'reel';
+  type: "video" | "post" | "article" | "tweet" | "reel";
   description?: string;
   addedAt: string;
 }
